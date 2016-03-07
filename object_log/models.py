@@ -148,6 +148,8 @@ class LogItem(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, )
     user = models.ForeignKey(User, related_name='log_items')
     
+    metadata = models.TextField(null=True)
+
     object_type1 = models.ForeignKey(ContentType, \
     related_name='log_items1', null=True)
     object_id1 = models.PositiveIntegerField(null=True)

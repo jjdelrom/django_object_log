@@ -9,7 +9,7 @@ class LogMiddleware(object):
         try:
             action = LogAction.objects.get(name=request.path)
         except ObjectDoesNotExist:
-            action = LogAction.objects.create(name=request.path, 
+            action = LogAction(name=request.path, 
                 template=request.path)
             action.save()
         except Exception:
@@ -18,5 +18,18 @@ class LogMiddleware(object):
         if action:              
             # Add log entry
             if not request.user.is_anonymous():
-                entry = LogItem.objects.create(action=action, user=request.user)
+
+                if request.method == 'GET':
+                    meta = request.GET
+                elif request.method == 'POST':
+                    meta = request.POST
+                
+                metadata = dict()    
+                metadata['method'] = request.method
+                metadata[request.method] = meta.dict()
+
+                entry = LogItem(action=action, 
+                    user=request.user, 
+                    metadata=json.dumps(metadata))
                 entry.save()
+                
