@@ -97,8 +97,8 @@ class LogAction(models.Model):
     @param name           string  verb (for example: add)
     """
     
-    name = models.CharField(max_length=128, unique=True, primary_key=True)
-    template = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=False, primary_key=True)
+    template = models.CharField(max_length=128, unique=False)
     objects = LogActionManager()
     
     def __str__(self):
