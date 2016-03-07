@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from object_log.models import LogAction, LogItem
+import json
 
 class LogMiddleware(object):
     def process_request(self, request):
@@ -16,9 +17,6 @@ class LogMiddleware(object):
              
         if action:              
             # Add log entry
-            entry = LogItem.objects.create(action=action, user=request.user)
-            entry.save()
-
-
-        
-            
+            if not request.user.is_anonymous():
+                entry = LogItem.objects.create(action=action, user=request.user)
+                entry.save()
