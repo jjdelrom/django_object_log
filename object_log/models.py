@@ -2,7 +2,6 @@ from sys import modules
 
 from django.db import models
 
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericForeignKey
 from django.db import transaction
@@ -10,6 +9,15 @@ from django.db.utils import DatabaseError
 from django.template.loader import get_template
 from django.template import Context
 from django.utils import simplejson
+
+from django.conf import settings
+try:
+    app_model = settings.AUTH_USER_MODEL
+    from django.db.models.loading import get_model
+    User = get_model(*app_model.split('.'))
+except Exception, e:
+    print e
+    from django.contrib.auth.models import User
 
 
 class LogActionManager(models.Manager):

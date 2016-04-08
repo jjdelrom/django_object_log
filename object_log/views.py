@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseRedirect
@@ -7,6 +7,16 @@ from django.db.models.query_utils import Q
 from django.shortcuts import render_to_response, get_object_or_404
 
 from object_log.models import LogItem
+
+from django.conf import settings
+try:
+    app_model = settings.AUTH_USER_MODEL
+    from django.db.models.loading import get_model
+    User = get_model(*app_model.split('.'))
+    print User
+except Exception, e:
+    print e
+    from django.contrib.auth.models import User
 
 
 def list_for_object(request, obj, rest=False):

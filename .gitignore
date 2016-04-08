@@ -7,7 +7,8 @@
 
 # Settings should be setup per install
 settings.py
-
+dist/
+build/
 # Any sqlite database files created by the project
 *.db
 
