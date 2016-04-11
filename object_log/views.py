@@ -13,9 +13,7 @@ try:
     app_model = settings.AUTH_USER_MODEL
     from django.db.models.loading import get_model
     User = get_model(*app_model.split('.'))
-    print User
 except Exception, e:
-    print e
     from django.contrib.auth.models import User
 
 

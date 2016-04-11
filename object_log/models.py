@@ -16,7 +16,6 @@ try:
     from django.db.models.loading import get_model
     User = get_model(*app_model.split('.'))
 except Exception, e:
-    print e
     from django.contrib.auth.models import User
 
 
@@ -203,7 +202,12 @@ class LogItem(models.Model):
     def save(self, *args, **kwargs):
         if self._data is not None and self.serialized_data is None:
             self.serialized_data = simplejson.dumps(self._data)
-        super(LogItem, self).save(*args, **kwargs)
+        # TODO: Handle save when extended User from auth_user
+        try:
+            super(LogItem, self).save(*args, **kwargs)
+        except:
+            print args
+            print kwargs
 
     def render(self, **context):
         """
