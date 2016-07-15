@@ -8,7 +8,10 @@ from django.db import transaction
 from django.db.utils import DatabaseError
 from django.template.loader import get_template
 from django.template import Context
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except:
+    import json as simplejson
 
 from django.conf import settings
 try:
