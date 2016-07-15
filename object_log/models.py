@@ -33,7 +33,7 @@ class LogActionManager(models.Manager):
         else:
             self._DELAYED.append((key, template, build_cache))
 
-    @transaction.commit_manually
+    @transaction.atomic
     def _register(self, key, template, build_cache=None):
         """
         Registers and caches an LogAction type
