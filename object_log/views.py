@@ -11,8 +11,8 @@ from object_log.models import LogItem
 from django.conf import settings
 try:
     app_model = settings.AUTH_USER_MODEL
-    from django.db.models.loading import get_model
-    User = get_model(*app_model.split('.'))
+    from django.apps import apps
+    User = apps.get_model(*app_model.split('.'))
 except Exception, e:
     from django.contrib.auth.models import User
 
